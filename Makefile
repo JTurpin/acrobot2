@@ -68,6 +68,9 @@ run-local:
 shell:
 	env FLASK_APP=run.py flask shell
 
+shell-prod:
+	env FLASK_APP=run.py ENV=prod flask shell
+
 db-init:
 	python manage.py db init
 

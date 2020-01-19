@@ -5,7 +5,7 @@ from acrobot.utils.secrets_manager import SecretsManager
 class DefaultSettings(AbstractClass):
     def __init__(self):
         self.ENV_LOADED = True
-        self.SLACK_BOT_TOKEN = ""
+        self.SLACK_BOT_TOKEN = "xoxb-2917780505-892001917041-P5MkZ5tEpoViLHsUqD6cp05S"
         DB_PASSWORD = ""
         DB_USER = "postgres"
         DB_NAME = "acrobot"

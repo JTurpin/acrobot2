@@ -21,8 +21,14 @@ class Acronym(db.Model):
 
     @classmethod
     def create(cls, key, definition):
-        acronym = cls(key, definition)
+        # To make lookups easier, enforce all keys to be lowercase
+        acronym = cls(key.lower(), definition)
         db.session.add(acronym)
         db.session.commit()
 
         return acronym
+
+
+# Model helper, probably belongs in utils submodule
+def find_acronyms(search_key):
+    return Acronym.query.filter_by(acronym_key=search_key.lower()).all()
