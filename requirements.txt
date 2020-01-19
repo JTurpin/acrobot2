@@ -1,0 +1,7 @@
+Flask~=1.0.2
+Flask-Migrate>=2.5.2
+Flask-Script>=2.0.5
+psycopg2>=2.8.4
+slackclient==2.5.0
+SQLAlchemy>=0.8.0
+zappa~=0.42

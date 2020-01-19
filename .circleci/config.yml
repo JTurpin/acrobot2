@@ -1,0 +1,75 @@
+version: 2
+jobs:
+  test-service:
+    docker:
+      - image: python:3.6.1
+    working_directory: ~/se-acrobot
+    steps:
+      - checkout
+      - restore_cache:
+          key: deps-{{ checksum "requirements.txt" }}-{{ checksum "requirements_dev.txt" }}
+      - run:
+          name: Create Virtual Env & Install Dependencies
+          command: |
+            python3 -m venv ~/test_acrobot
+            . ~/test_acrobot/bin/activate
+            pip install -r requirements_dev.txt --upgrade
+      - save_cache:
+          key: deps-{{ checksum "requirements.txt" }}-{{ checksum "requirements_dev.txt" }}
+          paths:
+            - "~/test_acrobot"
+      - run:
+          name: Tests & Coverage
+          command: |
+            . ~/test_acrobot/bin/activate
+            make test-all
+      - store_artifacts:
+          path: test-reports/
+          destination: tr1
+  deploy-service-prod:
+    docker:
+      - image: python:3.6.2
+    working_directory: ~/se-acrobot
+    steps:
+      - checkout
+      - restore_cache:
+          key: deps-{{ checksum "requirements.txt" }}
+      - run:
+          name: Create Virtual Env & Install Dependencies
+          command: |
+            python3 -m venv ~/deploy_acrobot
+            . ~/deploy_acrobot/bin/activate
+            pip install --upgrade pip
+            pip install -r requirements.txt --upgrade
+      - save_cache:
+          key: deps-{{ checksum "requirements.txt" }}
+          paths:
+            - "~/deploy_acrobot"
+      - deploy:
+          name: Deploy to Prod
+          command: |
+            . ~/deploy_acrobot/bin/activate
+            sed -i '/profile_name/d' zappa_settings.yml
+            export AWS_ACCESS_KEY_ID=$PROD_AWS_ACCESS_KEY_ID
+            export AWS_SECRET_ACCESS_KEY=$PROD_AWS_SECRET_ACCESS_KEY
+            zappa update prod
+workflows:
+  version: 2
+  test-service:
+    jobs:
+      - test-service:
+          filters:
+            branches:
+              ignore: master
+  test-and-deploy-service:
+    jobs:
+      - test-service:
+          filters:
+            branches:
+              only: master
+      - deploy-service-prod:
+          requires:
+            - test-service
+          filters:
+            branches:
+              only: master

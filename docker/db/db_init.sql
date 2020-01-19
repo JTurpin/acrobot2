@@ -1,0 +1,2 @@
+CREATE DATABASE acrobot;
+CREATE DATABASE acrobot_test;

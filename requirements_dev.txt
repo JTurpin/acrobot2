@@ -1,0 +1,16 @@
+-r requirements.txt
+pip~=18.1
+bumpversion~=0.5
+wheel~=0.29
+watchdog~=0.8
+flake8~=3.5
+tox~=2.3
+coverage~=4.1
+Sphinx~=1.4
+pytest~=3.0
+pyflakes~=2.0
+pyparsing~=2.1
+pytest-cov~=2.4
+responses~=0.10
+flask-testing~=0.6
+flask-shell-ipython~=0.3

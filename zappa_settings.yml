@@ -1,0 +1,19 @@
+shared:
+  project_name: acrobot
+  lambda_description: Acrobot Powered by Flask
+  apigateway_enabled: true
+  app_function: run.app
+  binary_support: false
+
+  environment_variables: &shared_env_vars
+    SERVICE: acrobot
+prod:
+  extends: shared
+  profile_name: tendril-prod
+  log_level: INFO
+  s3_bucket: tendril-global-prod-lambda
+  environment_variables:
+    << : *shared_env_vars
+    ENV: prod
+    VERSION: 0.1.0
+    SERVICE_LOG_LEVEL: INFO
