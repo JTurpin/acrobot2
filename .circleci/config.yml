@@ -50,6 +50,7 @@ jobs:
           command: |
             . ~/deploy_acrobot/bin/activate
             sed -i '/profile_name/d' zappa_settings.yml
+            export AWS_DEFAULT_REGION=us-east-1
             export AWS_ACCESS_KEY_ID=$PROD_AWS_ACCESS_KEY_ID
             export AWS_SECRET_ACCESS_KEY=$PROD_AWS_SECRET_ACCESS_KEY
             zappa update prod
