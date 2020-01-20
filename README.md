@@ -1,7 +1,5 @@
 # Roadmap
-## Iteration 4
-* Implement routes for Slash command support
-* Add command-routing layer for `/acrobot add`
+
 
 ## Iteration 5
 * Implement [Building block response](https://api.slack.com/block-kit) for a friendlier UX
@@ -21,15 +19,9 @@
 
 
 # Version History
-## Iteration 1- Friday Hackathon
-* Init project with base Real Time Messaging event loop
-* Deploy to Heroku
-* json file as backend storage
-* Absolute matching with .lower()
-
-## Iteration 2- Overnight Interest
-* Add tests
-* CI/CD support with CircleCI
+## Iteration 4- "Just Read the Instructions"
+* Implement routes for Slash command support
+* Add command-routing layer for Slash commands: `/acrobot` and `/acrobot-add`
 
 ## Iteration 3- RIP Acrobot, Long Live Acrobot2.0
 * Rewrite with Flask
@@ -37,3 +29,13 @@
 * Implemented threading for Event API + Web API
 * Implemented before-request logic to slack auth/security
 * Change backend storage to postgres, refactor for de-duping
+
+## Iteration 2- Overnight Interest
+* Add tests
+* CI/CD support with CircleCI
+
+## Iteration 1- Friday Hackathon
+* Init project with base Real Time Messaging event loop
+* Deploy to Heroku
+* json file as backend storage
+* Absolute matching with .lower()
