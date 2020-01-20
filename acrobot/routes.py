@@ -58,10 +58,12 @@ def route_slack_event():
 @verfiy_slash_command_token
 def search_slash_command(**kwargs):
     # Kwargs passed from verfiy_slash_command_token decorator
+    slack_client = WebClient(current_app.config["SLACK_BOT_TOKEN"])
     request_params = kwargs['request_params']
     respond_thread = threading.Thread(target=respond_to_search_command,
                                       args=(request_params,
-                                            current_app._get_current_object()
+                                            current_app._get_current_object(),
+                                            slack_client
                                             )
                                       )
     respond_thread.start()

@@ -4,7 +4,7 @@ from acrobot.models import Acronym, find_acronyms
 from acrobot.events import build_acronym_response
 
 
-def respond_to_search_command(slack_event, app):
+def respond_to_search_command(slack_event, app, slack_client):
     # Sends an ephemeral message back to the user
     with app.app_context():
         search_key = slack_event['text']
@@ -15,6 +15,7 @@ def respond_to_search_command(slack_event, app):
             "text": message_text
         }
         requests.post(slack_event['response_url'], json=message)
+        slack_client.chat_postMessage(channel="UKA5X94AZ", text=f"someone just used Acrobot to search {search_key}")
 
 
 def respond_to_add_command(slack_event, app, slack_client):
