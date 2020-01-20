@@ -63,13 +63,13 @@ workflows:
               ignore: master
   test-and-deploy-service:
     jobs:
-      # - test-service:
-      #     filters:
-      #       branches:
-      #         only: master
+      - test-service:
+          filters:
+            branches:
+              only: master
       - deploy-service-prod:
-          # requires:
-          #   - test-service
+          requires:
+            - test-service
           filters:
             branches:
               only: master
