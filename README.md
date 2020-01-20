@@ -1,7 +1,7 @@
 # Acrobot2
 Acrobot2 is a recreation of the idea behind Acrobot, with a friendlier and more flexible backend.
 
-Acrobot2 is written with Flask, and deployed to AWS Lambda with Zappa. The backend datastore is a Postgres RDS instance. There is also a docker-compose file to run postgres locally.
+Acrobot2 is written with Flask, and deployed to AWS Lambda with Zappa. Deployments happen automatically with CircleCI on pushes to master. The backend datastore is a Postgres RDS instance. There is also a docker-compose file to run postgres locally.
 
 For a full, slightly rambling writeup, check [here](https://simpleenergy.atlassian.net/wiki/spaces/~403095670/pages/881132280/ABHA+A+Broad+History+of+Acrobot)
 
