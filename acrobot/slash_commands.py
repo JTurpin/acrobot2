@@ -1,6 +1,7 @@
 import requests
 
 from acrobot.models import Acronym, find_acronyms
+from acrobot.events import build_acronym_response
 
 
 def respond_to_search_command(slack_event, app):
@@ -18,7 +19,7 @@ def respond_to_search_command(slack_event, app):
 
 def respond_to_add_command(slack_event, app, slack_client):
     with app.app_context():
-        channel = "test"
+        channel = "acrobot-support"
         message = "This is a mock response!"
         # Sloppy way to break out the two args passed in to slack
         # Example: slack_event["text"] == '"gpc" "green button connect"'
@@ -42,15 +43,3 @@ def respond_to_add_command(slack_event, app, slack_client):
             mentioned_user = slack_event["user_id"]
             message = f"I have learned `{acronym}` means `{definition}`. Thank you <@{mentioned_user}>!"
             slack_client.chat_postMessage(channel=channel, text=message)
-
-
-def build_acronym_response(found_acronyms):
-    # separated into its own method so that this can be a more robust and reusable response in the future
-    found_count = len(found_acronyms)
-    if found_count < 1:
-        return "Couldn't find any matches. Fill out this form to add it! " \
-               "https://forms.gle/ue5GMSaajdiHiGX2A, you can also talk about me in <#CS832PHPU>"
-
-    acronym_definitions = ", or ".join([acronym.acronym_definition for acronym in found_acronyms])
-    message = f"Found {found_count} possible result(s): {acronym_definitions}"
-    return message
