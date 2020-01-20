@@ -9,20 +9,21 @@ class Acronym(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     acronym_key = db.Column(db.Text, index=True)
     acronym_definition = db.Column(db.Text)
-    user_id_created_by = db.Column(db.Text)
+    user_created_by = db.Column(db.Text)
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
 
-    def __init__(self, key, definition):
+    def __init__(self, key, definition, created_by=None):
         self.acronym_key = key
         self.acronym_definition = definition
+        self.user_created_by = created_by or "N/A"
 
     def __repr__(self):
         return '<key {}, value {}>'.format(self.acronym_key, self.acronym_definition)
 
     @classmethod
-    def create(cls, key, definition):
-        # To make lookups easier, enforce all keys to be lowercase
-        acronym = cls(key.lower(), definition)
+    def create(cls, key, definition, created_by=None):
+        # To make sql queries easier, enforce all keys to be lowercase
+        acronym = cls(key.lower(), definition, created_by=created_by)
         db.session.add(acronym)
         db.session.commit()
 

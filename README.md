@@ -25,13 +25,13 @@
 * Init project with base Real Time Messaging event loop
 * Deploy to Heroku
 * json file as backend storage
-* Absolute matching with .toLower()
+* Absolute matching with .lower()
 
 ## Iteration 2- Overnight Interest
 * Add tests
 * CI/CD support with CircleCI
 
-## Iteration 3- Acrobot is Dead, Long Live Acrobot2.0
+## Iteration 3- RIP Acrobot, Long Live Acrobot2.0
 * Rewrite with Flask
 * Deploy with Zappa
 * Implemented threading for Event API + Web API

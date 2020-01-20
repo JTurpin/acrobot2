@@ -15,7 +15,7 @@ def handle_event(slack_event, app, slack_client):
 
 
 def handle_app_mention(slack_event, slack_client):
-    # This is the internal ID of the app sur
+    # This is the internal ID of the app user
     # Assumes usage for this bot is "@AcroBot <value>"
     mention_keyword = "<@US801SZ17> "
 
@@ -31,7 +31,8 @@ def build_acronym_response(found_acronyms):
     # separated into its own method so that this can be a more robust and reusable response in the future
     found_count = len(found_acronyms)
     if found_count < 1:
-        return "Couldn't find any matches. Fill out this form to add it! https://forms.gle/ue5GMSaajdiHiGX2A, you can also talk about me in <#CS832PHPU>"
+        return "Couldn't find any matches. Fill out this form to add it! " \
+               "https://forms.gle/ue5GMSaajdiHiGX2A, you can also talk about me in <#CS832PHPU>"
 
     acronym_definitions = ", or ".join([acronym.acronym_definition for acronym in found_acronyms])
     message = f"Found {found_count} possible result(s): {acronym_definitions}"
