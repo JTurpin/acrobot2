@@ -1,7 +1,10 @@
+import logging
 import requests
 
 from acrobot.models import Acronym, find_acronyms
 from acrobot.events import build_acronym_response
+
+logger = logging.getLogger(__name__)
 
 
 def respond_to_search_command(slack_event, app, slack_client):
@@ -28,6 +31,7 @@ def respond_to_add_command(slack_event, app, slack_client):
         try:
             acronym, definition = slack_event["text"].replace('" "', '|||').strip('"').split("|||")
         except:
+            logger.except(f"Failed to parse message: {slack_event['text']}")
             message = {
                 "response_type": "ephemeral",
                 "text": "It looks like your message was malformatted. :sadparrot:"
