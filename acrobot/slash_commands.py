@@ -30,7 +30,7 @@ def respond_to_add_command(slack_event, app, slack_client):
         # Example: slack_event["text"] == '"gpc" "green button connect"'
         # Want to split on '" "', and replace the remaining quotes
         try:
-            slack_message = slack_event["text"].replace('“', '"').replace(u'\u201c', '"').replace(u'\u201d', '"')
+            slack_message = slack_event["text"].replace('“', '"').replace('“','"').replace('”','"').replace(u'\u201c', '"').replace(u'\u201d', '"')
             acronym, definition = slack_message.replace('" "', '|||').strip('"').split("|||")
         except:
             logger.warn(f"Failed to parse message: {slack_event['text']}")
