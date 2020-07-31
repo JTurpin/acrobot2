@@ -6,6 +6,7 @@ class DefaultSettings(AbstractClass):
     def __init__(self):
         self.ENV_LOADED = True
         self.SLACK_BOT_TOKEN = ""
+        self.SLACK_VERIFICATION_TOKEN = ""
         DB_PASSWORD = ""
         DB_USER = "postgres"
         DB_NAME = "acrobot"

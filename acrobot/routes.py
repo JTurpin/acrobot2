@@ -12,16 +12,23 @@ from flask import (
 
 from acrobot.events import (
     handle_setup,
-    handle_event
+    handle_event,
 )
-from acrobot.utils.slack import verify_slack_signature
+from acrobot.slash_commands import (
+    respond_to_search_command,
+    respond_to_add_command
+)
+from acrobot.utils.slack import (
+    verify_event_signature,
+    verfiy_slash_command_token
+)
 
 logger = logging.getLogger(__name__)
 acrobot = Blueprint("acrobot", __name__)
 
 
 @acrobot.route("/events", methods=["POST"])
-@verify_slack_signature
+@verify_event_signature
 def route_slack_event():
     slack_client = WebClient(current_app.config["SLACK_BOT_TOKEN"])
 
@@ -45,6 +52,40 @@ def route_slack_event():
         # https://stackoverflow.com/questions/53386968/multithreading-in-aws-lambda-using-python3
         event_thread.join()
         return Response(status=200)
+
+
+@acrobot.route("/commands/search", methods=["POST"])
+@verfiy_slash_command_token
+def search_slash_command(**kwargs):
+    # Kwargs passed from verfiy_slash_command_token decorator
+    slack_client = WebClient(current_app.config["SLACK_BOT_TOKEN"])
+    request_params = kwargs['request_params']
+    respond_thread = threading.Thread(target=respond_to_search_command,
+                                      args=(request_params,
+                                            current_app._get_current_object(),
+                                            slack_client
+                                            )
+                                      )
+    respond_thread.start()
+    respond_thread.join()
+    return Response(status=200)
+
+
+@acrobot.route("/commands/add", methods=["POST"])
+@verfiy_slash_command_token
+def add_slash_command(**kwargs):
+    slack_client = WebClient(current_app.config["SLACK_BOT_TOKEN"])
+    # Kwargs passed from verfiy_slash_command_token decorator
+    request_params = kwargs['request_params']
+    respond_thread = threading.Thread(target=respond_to_add_command,
+                                      args=(request_params,
+                                            current_app._get_current_object(),
+                                            slack_client
+                                            )
+                                      )
+    respond_thread.start()
+    respond_thread.join()
+    return Response(status=200)
 
 
 # Healthcheck

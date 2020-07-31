@@ -9,9 +9,8 @@ shared:
     SERVICE: acrobot
 prod:
   extends: shared
-  profile_name: tendril-prod
   log_level: INFO
-  s3_bucket: tendril-global-prod-lambda
+  s3_bucket: todo
   environment_variables:
     << : *shared_env_vars
     ENV: prod
