@@ -19,22 +19,35 @@ def respond_to_search_command(slack_event, app, slack_client):
             "text": message_text
         }
         requests.post(slack_event['response_url'], json=message)
-        slack_client.chat_postMessage(channel="UKA5X94AZ", text=f"someone just used Acrobot to search {search_key}")
+        report_usage(search_key, slack_client)
+
+
+def report_usage(search_key, slack_client):
+    # Implemented this so that 'admins' can know when slash commands are being used.
+    # More could be done here, but this level of logging seemed sufficient.
+    usage_report_recipients = {
+        "James Fefes": "UKA5X94AZ",
+    }
+    for _, slack_user_id in usage_report_recipients.items():
+        slack_client.chat_postMessage(channel=slack_user_id, text=f"someone just used Acrobot to search {search_key}")
 
 
 def respond_to_add_command(slack_event, app, slack_client):
     with app.app_context():
         channel = "acrobot-support"
         message = "This is a mock response!"
-        # Sloppy way to break out the two args passed in to slack
+        # Sloppy way to break out the two args passed in to slack. Sorry
         # Example: slack_event["text"] == '"gpc" "green button connect"'
         # Want to split on '" "', and replace the remaining quotes
         try:
-            slack_message = slack_event["text"].replace('“', '"').replace('“','"').replace('”','"').replace(u'\u201c', '"').replace(u'\u201d', '"')
+            slack_message = slack_event["text"].replace('“', '"').replace('“','"').replace('”','"').replace(u'\u201c', '"').replace(u'\u201d', '"') # noqa
             acronym, definition = slack_message.replace('" "', '|||').strip('"').split("|||")
-        except:
+        # TODO: This should probably only need accept string formatting exceptions, but I was lazy. Still sorry.
+        except:  # noqa: E722
             logger.warn(f"Failed to parse message: {slack_event['text']}")
             message = {
+                # ephemeral messages are only seen by the user who sent the slash command
+                # https://api.slack.com/methods/chat.postEphemeral
                 "response_type": "ephemeral",
                 "text": "It looks like your message was malformatted. :sadparrot:"
                         "\nUsage is `/acrobot-add \"acronym\" \"definition\"`. "

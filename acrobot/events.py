@@ -8,6 +8,7 @@ def handle_setup(challenge_payload):
 
 
 def handle_event(slack_event, app, slack_client):
+    # Handle any events that happen in a channel this bot exists in
     with app.app_context():
         event_type = slack_event["type"]
         if event_type == 'app_mention':
@@ -31,7 +32,9 @@ def build_acronym_response(found_acronyms):
     # separated into its own method so that this can be a more robust and reusable response in the future
     found_count = len(found_acronyms)
     if found_count < 1:
-        return "Couldn't find any matches. You can now add new acronyms with `/acrobot-add \"acronym\" \"definition\". Try it yourself!`"
+        return ("Couldn't find any matches. "
+                "You can now add new acronyms with `/acrobot-add \"acronym\" \"definition\". "
+                "Try it yourself!`")
 
     acronym_definitions = ", or ".join([acronym.acronym_definition for acronym in found_acronyms])
     message = f"Found {found_count} possible result(s): {acronym_definitions}"
