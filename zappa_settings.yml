@@ -10,7 +10,7 @@ shared:
 prod:
   extends: shared
   log_level: INFO
-  s3_bucket: tendril-global-prod-lambda
+  s3_bucket: todo
   environment_variables:
     << : *shared_env_vars
     ENV: prod

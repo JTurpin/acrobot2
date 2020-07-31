@@ -3,5 +3,5 @@ Flask-Migrate>=2.5.2
 Flask-Script>=2.0.5
 psycopg2-binary
 slackclient==2.5.0
-git+ssh://git@github.com/simpleenergy/se-safe-sqlalchemy.git#egg=safe_sqlalchemy
+SQLAlchemy>=0.8.0
 zappa>=0.42.1
