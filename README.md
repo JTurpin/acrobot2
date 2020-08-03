@@ -3,6 +3,8 @@ Acrobot2 is a recreation of the idea behind Acrobot, with a friendlier and more 
 
 Acrobot2 is written with Flask, and deployed to AWS Lambda with Zappa. Deployments happen automatically with CircleCI on pushes to master. The backend datastore is a Postgres RDS instance. There is also a docker-compose file to run postgres locally.
 
+Sandbox Slack workspace with discussion found here: https://join.slack.com/t/acrobot-sandbox/shared_invite/zt-g8imryw6-320GznE1ZeuyYP5UE4j6aA
+
 ## Usage
 `@Acrobot <acronym>`: Original functionality of Acrobot v1 has been retained, mentioning the bot in a channel along with an acronym will look it up and post it to the same channel
 
