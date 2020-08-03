@@ -6,3 +6,5 @@ services:
       - "5432:5432"
     volumes:
       - ./docker/db:/docker-entrypoint-initdb.d
+    environment:
+      POSTGRES_HOST_AUTH_METHOD: "trust"
