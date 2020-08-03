@@ -7,6 +7,7 @@ class DefaultSettings(AbstractClass):
         self.ENV_LOADED = True
         self.SLACK_BOT_TOKEN = ""
         self.SLACK_VERIFICATION_TOKEN = ""
+        self.SLACK_SIGNING_SECRET = ""
         DB_PASSWORD = ""
         DB_USER = "postgres"
         DB_NAME = "acrobot"
