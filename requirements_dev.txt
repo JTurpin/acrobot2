@@ -14,3 +14,4 @@ pytest-cov~=2.4
 responses~=0.10
 flask-testing~=0.6
 flask-shell-ipython~=0.3
+pygments>=2.7.4 # not directly required, pinned by Snyk to avoid a vulnerability
